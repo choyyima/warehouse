@@ -1,0 +1,2 @@
+[14-Sep-2016 20:51:01 America/Chicago] PHP Warning:  mysql_connect(): Access denied for user 'aryanaco_order'@'localhost' (using password: YES) in /home/aryanaco/public_html/orderkantor.com/jqgrid/lib/inc/adodb/drivers/adodb-mysql.inc.php on line 460
+[14-Sep-2016 20:51:03 America/Chicago] PHP Warning:  mysql_connect(): Access denied for user 'aryanaco_order'@'localhost' (using password: YES) in /home/aryanaco/public_html/orderkantor.com/jqgrid/lib/inc/adodb/drivers/adodb-mysql.inc.php on line 460
