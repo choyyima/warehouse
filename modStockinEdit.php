@@ -28,17 +28,17 @@ while ($dataStockin = mysql_fetch_array($modalQueryStockin)) {
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Asal Dari: </label>
                         <div class="col-sm-4">
-                            <input type="text" name="proyek" placeholder="Nama Proyek" class="form-control"  value="<?php echo $dataStockin['proyek']; ?>">
+                            <input type="text" name="proyek" placeholder="Nama Proyek" class="form-control"  value="<?php echo $dataStockin['asal_proyek']; ?>">
                         </div>                                                        
                         <label class="col-sm-1 control-label">Tujuan: </label>
-                        <div class="col-sm-4">
-                            <input type="text" name="tujuan" placeholder="Tujuan" class="form-control"  value="<?php echo $dataStockin['lokasi']; ?>">
+                        <div class="col-sm-5">
+                            <input type="text" name="tujuan" placeholder="Tujuan" class="form-control"  value="<?php echo $dataStockin['lokasi_simpan']; ?>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Nama Barang: </label>
                         <div class="col-sm-4">
-                            <input type="text" name="nama_barang" placeholder="Nama Barang" class="form-control" value="<?php echo $dataStockin['type']; ?>">
+                            <input type="text" name="nama_barang" placeholder="Nama Barang" class="form-control" value="<?php echo $dataStockin['nama_barang']; ?>">
                         </div>
                         <label class="col-sm-1 control-label">Jum: </label>
                         <div class="col-sm-2">
@@ -51,10 +51,10 @@ while ($dataStockin = mysql_fetch_array($modalQueryStockin)) {
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Status/Kondisi: </label>
-                        <div class="col-sm-4">
-                            <input type="text" name="status" placeholder="Status" class="form-control" value="<?php echo $dataStockin['status']; ?>">
+                        <div class="col-sm-3">
+                            <input type="text" name="status" placeholder="Status" class="form-control" value="<?php echo $dataStockin['kondisi']; ?>">
                         </div>
-                        <label class="col-sm-1 control-label">Memo UVB: </label>
+                        <label class="col-sm-2 control-label">Keterangan: </label>
                         <div class="col-sm-5">
                             <textarea name="memo" class="form-control"> <?php echo $dataStockin['keterangan']; ?></textarea>
                         </div>

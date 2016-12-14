@@ -9,18 +9,15 @@
             <file>file:/D:/htdocs/orderkantor/users.php</file>
         </group>
         <group>
-            <file>file:/C:/AppServ/www/warehouse/assets/css/style.css</file>
-            <file>file:/C:/AppServ/www/warehouse/assets/css/form-elements.css</file>
-            <file>file:/C:/AppServ/www/warehouse/premium-profile.html</file>
-            <file>file:/C:/AppServ/www/warehouse/unit.php</file>
-            <file>file:/C:/AppServ/www/warehouse/login.php</file>
+            <file>file:/C:/AppServ/www/warehouse/stockout.php</file>
+            <file>file:/C:/AppServ/www/warehouse/coba.php</file>
+            <file>file:/C:/AppServ/www/warehouse/test.php</file>
+            <file>file:/C:/AppServ/www/warehouse/cardstok.php</file>
+            <file>file:/C:/AppServ/www/warehouse/action/editStockin.php</file>
             <file>file:/C:/AppServ/www/warehouse/index.php</file>
-            <file>file:/C:/AppServ/www/warehouse/assets/js/scripts.js</file>
-            <file>file:/C:/AppServ/www/warehouse/view.php</file>
-            <file>file:/C:/AppServ/www/warehouse/lokasi.php</file>
+            <file>file:/C:/AppServ/www/warehouse/action/addStockout.php</file>
             <file>file:/C:/AppServ/www/warehouse/stockin.php</file>
-            <file>file:/C:/AppServ/www/warehouse/checkdata.php</file>
-            <file>file:/C:/AppServ/www/warehouse/index.html</file>
+            <file>file:/C:/AppServ/www/warehouse/tes.php</file>
         </group>
     </open-files>
 </project-private>

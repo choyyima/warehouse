@@ -1,154 +1,80 @@
+<?php include './config.php'; ?>
+
 <!doctype html>
-<html lang="en">
-    <head>
-        <title>Aguzrybudy.com | Crud Menggunakan Modal Bootstrap (popup)</title>
-        <meta content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" name="viewport"/>
-        <meta content="Aguzrybudy" name="author"/>
+<html lang="en"><head>
+        <meta charset="utf-8">
+        <title>Warehouse</title>
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <script src="assets/js/jquery-1.11.1.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
         <!--<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.css">-->
         <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
+        <link rel="shortcut icon" href="assets/ico/warehouse.png">
+        <link rel="stylesheet" href="css/dataTables.bootstrap.css">
+        <!--<script src="lib/jquery-1.11.1.min.js" type="text/javascript"></script>-->
+        <link href="css/select2.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="stylesheets/theme.css">
+        <link rel="stylesheet" type="text/css" href="stylesheets/premium.css">
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <style>
+            #data_wrapper{
+                overflow-x: auto;
+            }
+        </style>
     </head>
-    <body>
+    <body class=" theme-blue">
+        <style>
+            select{position:absolute; width:160px; height:23px; left:0; top:0; border:0;}
+            input{position: absolute; width: 140px;height:17px; left:0; top:0;}
+            p{position: relative; margin-top:50px;}
+        </style>
 
-        <div class="container">
-            <h2>Crud PHP 7 Menggunakan Modal Bootstrap (Popup)</h2>
-            <p>Bootstrap Modal  (Popup) By Aguzrybudy, Selasa 19 April 2016</p>
-            <p><a href="#" class="btn btn-success" data-target="#ModalAdd" data-toggle="modal">Add Data</a></p>      
-
-            <table id="mytable" class="table table-bordered">
-                <thead>
-                <th>No</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Action</th>
-                </thead>
-                <?php
-                //menampilkan data mysqli
-                include "koneksi.php";
-                $no = 0;
-                $modal = mysql_query("SELECT * FROM modal");
-                while ($r = mysql_fetch_array($modal)) {
-                    $no++;
-                    ?>
-                    <tr>
-                        <td><?php echo $no; ?></td>
-                        <td><?php echo $r['modal_name']; ?></td>
-                        <td><?php echo $r['description']; ?></td>
-                        <td>
-                            <a href="#" class='open_modal' id='<?php echo $r['modal_id']; ?>'>Edit</a>
-                            <a href="#" onclick="confirm_modal('proses_delete.php?&modal_id=<?php echo $r['modal_id']; ?>');">Delete</a>
-                        </td>
-                    </tr>
-
-
-                <?php } ?>
-            </table>
+        <div class="content">
+            <select class="form-control" name="">
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+            </select>
+            <input type="text" name="" value="" class="form-control" id="inputer">    
+            <p>value:</p>
         </div>
 
-        <!-- Modal Popup untuk Add--> 
-        <div id="ModalAdd" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title" id="myModalLabel">Add Data Using Modal Boostrap (popup)</h4>
-                    </div>
-
-                    <div class="modal-body">
-                        <form action="proses_save.php" name="modal_popup" enctype="multipart/form-data" method="POST">
-
-                            <div class="form-group" style="padding-bottom: 20px;">
-                                <label for="Modal Name">Modal Name</label>
-                                <input type="text" name="modal_name"  class="form-control" placeholder="Modal Name" required/>
-                            </div>
-
-                            <div class="form-group" style="padding-bottom: 20px;">
-                                <label for="Description">Description</label>
-                                <textarea name="description"  class="form-control" placeholder="Description" required/></textarea>
-                            </div>
-
-                            <div class="form-group" style="padding-bottom: 20px;">
-                                <label for="Date">Date</label>
-                                <input type="text" name="date"  class="form-control" plcaceholder="Timestamp" disabled value="Timestamp" required/>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button class="btn btn-success" type="submit">
-                                    Confirm
-                                </button>
-
-                                <button type="reset" class="btn btn-danger"  data-dismiss="modal" aria-hidden="true">
-                                    Cancel
-                                </button>
-                            </div>
-
-                        </form>
-
-
-
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Popup untuk Edit--> 
-        <div id="ModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
-        </div>
-
-        <!-- Modal Popup untuk delete--> 
-        <div class="modal fade" id="modal_delete">
-            <div class="modal-dialog">
-                <div class="modal-content" style="margin-top:100px;">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" style="text-align:center;">Are you sure to delete this information ?</h4>
-                    </div>
-
-                    <div class="modal-footer" style="margin:0px; border-top:0px; text-align:center;">
-                        <a href="#" class="btn btn-danger" id="delete_link">Delete</a>
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-        <!-- Javascript untuk popup modal Edit--> 
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
         <script type="text/javascript">
             $(document).ready(function () {
-                $(".open_modal").click(function (e) {
-                    var m = $(this).attr("id");
-                    $.ajax({
-                        url: "modal_edit.php",
-                        type: "GET",
-                        data: {modal_id: m, },
-                        success: function (ajaxData) {
-                            $("#ModalEdit").html(ajaxData);
-                            $("#ModalEdit").modal('show', {backdrop: 'true'});
-                        }
-                    });
+
+                function search() {
+
+                    var title = $("#search").val();
+
+                    if (title !== "") {
+                        $("#result").html("<img alt="ajax search" src='ajax-loader.gif'/>");
+                                $.ajax({
+                                    type: "post",
+                                    url: "search.php",
+                                    data: "title=" + title,
+                                    success: function (data) {
+                                        $("#result").html(data);
+                                        $("#search").val("");
+                                    }
+                                });
+                    }
+                }
+
+                $("#button").click(function () {
+                    search();
+                });
+
+                $('#search').keyup(function (e) {
+                    if (e.keyCode === 13) {
+                        search();
+                    }
                 });
             });
-
-//        <!-- Javascript untuk popup modal Delete--> 
-            function confirm_modal(delete_url)
-            {
-                $('#modal_delete').modal('show', {backdrop: 'static'});
-                document.getElementById('delete_link').setAttribute('href', delete_url);
-            }
         </script>
-
     </body>
 </html>
-
-
-
-
-

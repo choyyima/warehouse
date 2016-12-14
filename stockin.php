@@ -33,8 +33,7 @@ if (isset($_GET['page'])) {
                                             <th width="30px">No.</th>      
                                             <th>Date In/Tanggal Masuk</th>
                                             <th>Project/Proyek</th>
-                                            <th>Item/Unit</th>
-                                            <th>Type</th>                                            
+                                            <th>Item/Unit</th>                          
                                             <th>Sum</th>
                                             <th>Satuan</th>
                                             <th>Status</th>
@@ -43,12 +42,12 @@ if (isset($_GET['page'])) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $query = mysql_query("SELECT s.id,DATE_FORMAT(s.tanggal_masuk,'%d %b %Y') tgl, s.proyek, s.type, 
-                                                    s.jumlah, s.satuan, s.satuan,s.status, u.nama nama_unit, 
-                                                    l.nama nama_lokasi 
-                                                    FROM stockin s
-                                                    LEFT JOIN unit u on s.id_unit = u.id
-                                                    LEFT JOIN lokasi l on s.id_lokasi = l.id");
+                                        $query = mysql_query("SELECT s.id,DATE_FORMAT(s.tanggal_masuk,'%d %b %Y') tgl, s.asal_proyek, s.nama_barang, 
+                                                        s.jumlah, s.satuan, s.satuan,s.kondisi, u.nama nama_unit, 
+                                                        l.nama nama_lokasi 
+                                                        FROM stockin s
+                                                        LEFT JOIN unit u on s.id_unit = u.id
+                                                        LEFT JOIN lokasi l on s.id_lokasi = l.id");
                                         $total = mysql_num_rows($query);
 
                                         $no = 1;
@@ -57,12 +56,11 @@ if (isset($_GET['page'])) {
                                             echo"<tr>
                                                     <td>$no</td>
                                                     <td>$result[tgl]</td>
-                                                    <td>$result[proyek]</td>
-                                                    <td>$result[nama_unit]</td>
-                                                    <td>$result[type]</td>
+                                                    <td>$result[asal_proyek]</td>
+                                                    <td>$result[nama_barang]</td>
                                                     <td>$result[jumlah]</td>
                                                     <td>$result[satuan]</td>
-                                                    <td>$result[status]</td>
+                                                    <td>$result[kondisi]</td>
                                                     <td><a href='#' class='open_modal' id='$result[id]' class='btn btn-sm' data-toggle='tooltip' data-placement='bottom' title='Edit'><span class='glyphicon glyphicon-pencil'></span></a>
                                                         <a href='#' onclick='confirm_modal(\"action/delStockin.php?&id=$result[id]\");' class='btn btn-sm' data-toggle='tooltip' data-placement='bottom' title='Delete'><span class='glyphicon glyphicon-trash'></span></a></td>
                                                     </tr>";
@@ -88,10 +86,6 @@ if (isset($_GET['page'])) {
                                                             <div class="col-sm-3">
                                                                 <input type="date" name="tanggal_masuk" class="form-control" value="<?php echo date("d-m-Y"); ?>">
                                                             </div>
-                                                            <!--                                                            <label class="col-sm-3 control-label">No. Surat Jalan: </label>
-                                                                                                                        <div class="col-sm-4">
-                                                                                                                            <input type="text" name="no_sj" placeholder="Nomor Surat Jalan" class="form-control">
-                                                                                                                        </div>-->
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">Asal Proyek: </label>
@@ -99,14 +93,15 @@ if (isset($_GET['page'])) {
                                                                 <input type="text" name="proyek" placeholder="Nama Proyek" class="form-control">
                                                             </div>                                                        
                                                             <label class="col-sm-1 control-label">Lokasi Simpan: </label>
-                                                            <div class="col-sm-4">
+                                                            <div class="col-sm-5">
                                                                 <input type="text" name="tujuan" placeholder="Tujuan" class="form-control" >
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">Nama Barang: </label>
                                                             <div class="col-sm-4">
-                                                                <input type="text" name="nama_barang" placeholder="Nama Barang" class="form-control" >
+                                                                
+                                                                <input type="text" name="nama_barang" placeholder="Nama Barang" class="form-control" id="unit">
                                                             </div>
                                                             <label class="col-sm-1 control-label">Jum: </label>
                                                             <div class="col-sm-2">
@@ -119,10 +114,10 @@ if (isset($_GET['page'])) {
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">Status/Kondisi: </label>
-                                                            <div class="col-sm-4">
+                                                            <div class="col-sm-3">
                                                                 <input type="text" name="status" placeholder="Status" class="form-control">
                                                             </div>
-                                                            <label class="col-sm-1 control-label">Memo UVB: </label>
+                                                            <label class="col-sm-2 control-label">Keterangan: </label>
                                                             <div class="col-sm-5">
                                                                 <textarea name="memo" class="form-control"></textarea>
                                                             </div>
@@ -170,8 +165,9 @@ if (isset($_GET['page'])) {
                 </div>
             </div>
         </div>
-
-                                                                                                                                                                                                                                                                                                                                        <!--<script src="assets/js/jquery-1.11.1.min.js"></script>-->
+        <script src="js/jquery-1.10.2.js"></script>
+        <script src="js/jquery-ui.js"></script>
+                                                                                                                                                                                                                                                                                    <!--<script src="assets/js/jquery-1.11.1.min.js"></script>-->
         <!-- Javascript untuk popup modal Edit--> 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -186,6 +182,29 @@ if (isset($_GET['page'])) {
                             $("#ModalEdit").modal('show', {backdrop: 'true'});
                         }
                     });
+                });
+
+                var unit = $('#unit').val();
+                $('#unit').change(function () {
+                    $.ajax({
+                        url: "validation.php",
+                        type: 'POST',
+                        data: 'unit=' + unit,
+                        success: function (result) {
+                            if (result > 0) {
+                                alert("Nama Barang sudah ada");
+                            }
+        //                            else {
+                            // do something if username doesn't exist
+        //                            }
+                        }
+                    });
+                });
+            });
+
+            $(function () {
+                $("#unit").autocomplete({
+                    source: 'test.php'
                 });
             });
 

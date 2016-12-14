@@ -10,10 +10,27 @@ Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2016-11-25 17:11:40
+Date: 2016-12-14 16:42:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `history`
+-- ----------------------------
+DROP TABLE IF EXISTS `history`;
+CREATE TABLE `history` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `id_stockin` bigint(11) NOT NULL,
+  `id_stockout` bigint(11) NOT NULL,
+  `subqty` decimal(19,0) NOT NULL,
+  `created` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of history
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `kategori`
@@ -83,25 +100,25 @@ CREATE TABLE `stockin` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
   `id_unit` bigint(11) NOT NULL,
   `id_lokasi` bigint(11) NOT NULL,
-  `unit` varchar(100) NOT NULL,
-  `lokasi` varchar(100) NOT NULL,
+  `asal_proyek` varchar(100) NOT NULL,
   `tanggal_masuk` date NOT NULL,
-  `proyek` varchar(100) NOT NULL,
+  `lokasi_simpan` varchar(100) NOT NULL,
   `merk` varchar(50) NOT NULL,
-  `type` varchar(255) NOT NULL,
+  `nama_barang` varchar(255) NOT NULL,
   `jumlah` int(50) NOT NULL,
   `satuan` varchar(15) NOT NULL,
-  `status` varchar(20) NOT NULL DEFAULT '',
-  `no_surat_jalan` varchar(50) NOT NULL,
+  `kondisi` varchar(20) NOT NULL DEFAULT '',
   `keterangan` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of stockin
 -- ----------------------------
-INSERT INTO `stockin` VALUES ('1', '0', '0', '', '', '2016-11-22', 'MB1', '', 'NYM UK 3X2,5 MM', '1', 'ROLL', 'BAIK', '1234567890', '');
-INSERT INTO `stockin` VALUES ('3', '0', '0', '', 'AC', '2016-11-25', 'GMS', '', 'Terpal', '5', 'Lembar', 'Bekas', '', 'abcd');
+INSERT INTO `stockin` VALUES ('1', '0', '0', 'MBI', '2016-06-10', 'Gudang Mesin', '', '400 WATT', '15', 'Buah', 'Bekas', '');
+INSERT INTO `stockin` VALUES ('2', '0', '0', 'MBI', '2016-06-10', 'Gudang A1', '', 'Kabel iterna 3x2,5 mm', '2', 'Roll', 'Bekas', '');
+INSERT INTO `stockin` VALUES ('3', '0', '0', 'MBI', '2016-06-10', 'Gudang Mesin', '', 'kabel NYM 2x2,5', '29', 'Roll', 'Bagus', '');
+INSERT INTO `stockin` VALUES ('4', '0', '0', 'MBI', '2016-07-17', 'Gudang Atas', '', 'Pipa Maspion AW 3/4\"', '175', 'Btng', 'Bekas', '');
 
 -- ----------------------------
 -- Table structure for `stockout`
@@ -113,13 +130,18 @@ CREATE TABLE `stockout` (
   `tanggal_keluar` date NOT NULL,
   `no_memo_ovb` varchar(20) NOT NULL,
   `no_surat_jalan` varchar(20) NOT NULL,
-  `keterangan` varchar(100) NOT NULL,
+  `tujuan` varchar(100) NOT NULL,
+  `jumlah_diambil` int(50) NOT NULL,
+  `total` int(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of stockout
 -- ----------------------------
+INSERT INTO `stockout` VALUES ('1', '3', '2016-08-22', '19/VII/OVB/2016', '1234567890', 'Hotel Cleo', '2', '27');
+INSERT INTO `stockout` VALUES ('2', '1', '2016-08-06', '', '1/VIII/OVB/2014', 'Panverta', '15', '0');
+INSERT INTO `stockout` VALUES ('3', '4', '2016-02-20', '', '123456789', 'Kantor Pusat Aryana', '116', '59');
 
 -- ----------------------------
 -- Table structure for `unit`
@@ -154,7 +176,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '1', 'admin', 'ptac5051010', 'yes', 'active', '24 Nov 2016 - 08:36:20');
+INSERT INTO `user` VALUES ('1', '1', 'admin', 'ptac5051010', 'yes', 'active', '14 Dec 2016 - 16:15:56');
 INSERT INTO `user` VALUES ('2', '2', 'direksi', 'direksi', 'yes', 'active', '');
 INSERT INTO `user` VALUES ('3', '3', 'chintya', 'chintya', 'yes', 'active', '');
 INSERT INTO `user` VALUES ('4', '4', 'ulfah', 'ulfah', 'yes', 'active', '');

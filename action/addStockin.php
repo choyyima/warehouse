@@ -7,19 +7,17 @@ $tujuan = $_POST['tujuan'];
 $nama_barang = $_POST['nama_barang'];
 $jumlah = $_POST['jumlah'];
 $satuan = $_POST['satuan'];
-$status = $_POST['status'];
-$no_sj = $_POST['no_sj'];
+$status = $_POST['status']; 
 $memo = $_POST['memo'];
 
 $sql = "insert into `stockin` SET "
         . "`tanggal_masuk`='$tanggal_masuk', "
-        . "`proyek`='$proyek', "
-        . "`lokasi`='$tujuan', "
-        . "`type`='$nama_barang', "
+        . "`asal_proyek`='$proyek', "
+        . "`lokasi_simpan`='$tujuan', "
+        . "`nama_barang`='$nama_barang', "
         . "`jumlah`='$jumlah', "
         . "`satuan`='$satuan', "
-        . "`status`='$status', "
-        . "`no_surat_jalan`='$no_sj', "
+        . "`kondisi`='$status', "
         . "`keterangan`='$memo' ";
 
 $resultq = mysql_query($sql);

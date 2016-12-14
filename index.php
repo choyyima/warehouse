@@ -20,17 +20,14 @@ $dataPermis = mysql_fetch_array($rPermis);
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+        <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>-->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!--<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.css">-->
         <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
         <link rel="shortcut icon" href="assets/ico/warehouse.png">
         <link rel="stylesheet" href="css/dataTables.bootstrap.css">
-        <script src="lib/jquery-1.11.1.min.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.min.css">
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
-
+        <!--<script src="lib/jquery-1.11.1.min.js" type="text/javascript"></script>-->
+        <link href="css/select2.min.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="stylesheets/theme.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/premium.css">
         <style>
@@ -105,9 +102,10 @@ $dataPermis = mysql_fetch_array($rPermis);
 //                }if ($project == '1') {
                 $out = ' <li ><a href="index.php?wr=stockout&page=view"><span class="fa fa-caret-right"></span> Stock Out </a></li>';
 //                }if ($warehouse == '1') {
-//                    $wrh = '<li ><a href="index.php?wr=warehouse&page=view"><span class="fa fa-caret-right"></span> Report Stock In </a></li>';
+                $crd = '<li ><a href="index.php?wr=cardstok&page=view"><span class="fa fa-caret-right"></span> Card Stock </a></li>';
 //                }if ($workshop == '1') {
-//                    $wrk = '<li ><a href="index.php?wr=workshop&page=view"><span class="fa fa-caret-right"></span> Report Stock Out </a></li>';
+                $rso = '<li ><a href="index.php?wr=repstockout&page=view"><span class="fa fa-caret-right"></span> Report Stock Out </a></li>';
+                $rsi = '<li ><a href="index.php?wr=repstockin&page=view"><span class="fa fa-caret-right"></span> Report Stock In </a></li>';
 //                }if ($reset == '1') {
                 $res = '<li ><a href="index.php?wr=reset&page=view"><span class="fa fa-caret-right"></span> Reset Password</a></li>';
 //                }                    
@@ -126,7 +124,7 @@ $dataPermis = mysql_fetch_array($rPermis);
                         ?>
                     </ul>
                 </li>                
-                <li><a href="#" data-target=".transaksi-menu" class="nav-header collapsed" data-toggle="collapse"><i class="fa fa-fw fa-file "></i> Transaction <i class="fa fa-collapse"></i></a></li>
+                <li><a href="#" data-target=".transaksi-menu" class="nav-header collapsed" data-toggle="collapse"><i class="fa fa-fw fa-comment "></i> Transaction <i class="fa fa-collapse"></i></a></li>
                 <li>
                     <ul class="transaksi-menu nav nav-list collapse in">
                         <?php
@@ -134,7 +132,17 @@ $dataPermis = mysql_fetch_array($rPermis);
                         echo $out;
                         ?>               
                     </ul>
-                </li>                
+                </li>  
+                <li><a href="#" data-target=".laporan-menu" class="nav-header collapsed" data-toggle="collapse"><i class="fa fa-fw fa-file "></i> Report <i class="fa fa-collapse"></i></a></li>
+                <li>
+                    <ul class="transaksi-menu nav nav-list collapse in">
+                        <?php
+                        echo $crd;
+                        echo $rsi;
+                        echo $rso;
+                        ?>               
+                    </ul>
+                </li>  
                 <li><a href="#" data-target=".accounts-menu" class="nav-header collapsed" data-toggle="collapse"><i class="fa fa-fw fa-briefcase "></i> Account <i class="fa fa-collapse"></i></a></li>
                 <li>
                     <ul class="accounts-menu nav nav-list collapse in">
@@ -158,8 +166,12 @@ $dataPermis = mysql_fetch_array($rPermis);
                     include 'stockin.php';
                 } elseif ($g == 'stockout') {
                     include 'stockout.php';
-                } elseif ($g == 'stockcard') {
-                    include 'stockcard.php';
+                } elseif ($g == 'cardstok') {
+                    include 'cardstok.php';
+                }elseif ($g == 'repstockout') {
+                    include 'repstockout.php';
+                }elseif ($g == 'repstockin') {
+                    include 'repstockin.php';
                 } elseif ($g == 'user') {
                     include 'users.php';
                 } elseif ($g == 'report') {
@@ -182,10 +194,12 @@ $dataPermis = mysql_fetch_array($rPermis);
             ?>
         </div>
 
+        <script src="js/jquery-1.11.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.dataTables.min.js"></script>
         <script src="js/dataTables.bootstrap.js"></script>
-        <script src="js/jquery.numberformatter-1.2.3.js"></script>        
+        <script src="js/jquery.numberformatter-1.2.3.js"></script>
+        <script src="js/select2.min.js"></script>          
         <script type="text/javascript">
             $(function () {
                 var match = document.cookie.match(new RegExp('color=([^;]+)'));
@@ -209,17 +223,26 @@ $dataPermis = mysql_fetch_array($rPermis);
                 $('#data').dataTable({
                     "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]]
                 });
+                $("#js-example-basic-single").select2();
+
+                $('.item').change(function () {
+                    var val = $(this).val();
+                    $.ajax({
+                        url: "helper.php",
+                        data: "getValStd=" + val,
+                        dataType: 'json',
+                        cache: false,
+                        success: function (data) {
+                            $("#status").val(data.nama_rute);
+                            $("#satuan").val(data.layanan);
+                            $("#jumlah").val(data.tarif);
+                            $("#memo").val(data.nama);
+                            $("#proyek").val(data.id_sopir);
+                            $("#tujuan").val(data.id_rute);
+                        }
+                    });
+                });
             });
-            
-            $(".chosen").chosen();
-
-//            $("[rel=tooltip]").tooltip();
-//            $(function () {
-//                $('.demo-cancel-click').click(function () {
-//                    return false;
-//                });
-//            });
-
 
         </script>
     </body>

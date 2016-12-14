@@ -105,6 +105,7 @@ if (isset($_GET['page'])) {
                 </div>
             </div>
         </div>
+        <script src="js/jquery-1.11.1.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".open_modal").click(function (e) {
